@@ -54,6 +54,21 @@ var zenbeat = angular.module('zenbeat', ['ngRoute','ngAnimate'])
     $scope.isLoggedIn = function() {
       return AuthService.getUserAuthenticated();
     };
+
+    //ajax stuff
+    $scope.myData = {};
+    $scope.myData.doClick = function(item, event) {
+
+      var responsePromise = $http.get("/info");
+
+      responsePromise.success(function(data, status, headers, config) {
+        $scope.myData = data;
+      });
+      responsePromise.error(function(data, status, headers, config) {
+        alert("AJAX failed!");
+      });
+    };
+
   }])
   .controller('LoginController', ['$scope', 'LoginService', 'AuthService', '$location', function($scope, LoginService, AuthService, $location){
     if (AuthService.getUserAuthenticated()) {
