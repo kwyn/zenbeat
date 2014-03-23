@@ -18,9 +18,28 @@ exports.info = function(req, res){
     var time = data.shift();
     var guide = data.shift();
 
-    //do stuff:
 
-    res.send('info', data);
+    var avg = 0;
+    var return_data = [];
+
+    for( var i = 0; i<data.length; i++ ){
+      avg += data[i][1];
+      return_data.push( data[i][1] );
+    }
+
+    var average = Math.floor( avg/data.length );
+
+    var tt = data.length;
+
+    //do stuff:
+    var ret = {
+      "totalTime" : tt,
+      "average": average,
+      "time" : time,
+      "data" : data
+    };
+
+    res.send('info', ret);
   });
 
 };

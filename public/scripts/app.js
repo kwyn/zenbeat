@@ -34,7 +34,7 @@ var zenbeat = angular.module('zenbeat', ['ngRoute','ngAnimate'])
         });
       return this;
   }])
-  .controller('MainController', ['$scope', 'AuthService', '$location', function($scope, AuthService, $location) {
+  .controller('MainController', ['$scope', 'AuthService', '$location', '$http', function($scope, AuthService, $location, $http) {
     var token;
     OAuth.initialize('bIKHVRopgWPyXO6yQxbn9ohNjVc');
     OAuth.popup('google', function(err, result) {
@@ -57,12 +57,73 @@ var zenbeat = angular.module('zenbeat', ['ngRoute','ngAnimate'])
 
     //ajax stuff
     $scope.myData = {};
-    $scope.myData.doClick = function(item, event) {
+    $scope.gradients = "background-color:red;";
+
+    $scope.calcGradients = function( data ){
+
+      //  change = current - least //with margin???
+      //  change = current - average //with margin???
+      //
+      //  change = last_current - current
+      //  current_change += change
+      //
+      //  if current change goes above a threshold set a gradient for i
+      //  if it falls below a certain threshold set an end to the gradient
+      //
+      //if its negative then its increasing 
+      //if its positive its decereasing
+
+      //we know the total time here
+      //we calc the height in pixels
+
+      //we know the peaks @ a given time
+      //cal those for a given pixel
+      //set the start of the gradient
+      //set the end of the gradient at the end of the thing
+
+      //return a thing that is an array
+
+      var gradient = 'linear-gradient(to bottom, ';
+
+      var hrv = $scope.average,
+        change = 0,
+        previous_change = 0,
+        hrv = 0,
+        previous_hrv = 0,
+        current_change_total = 0;
+
+      for( var i = 0; i < $scope.myData.length; i++ ){
+
+        previous_change = change;
+
+        previous_hrv = hrv;
+        hrv = $scope.myData[i][1];
+
+        previous_change = change;
+        change = previous_hrv - hrv;
+
+        current_change_total += change;
+      }
+
+      gradient = gradient + 'red 0%, yellow 10%, red 20%, yellow 30%, red 40%, yellow 50%';
+
+      gradient = gradient + ')';
+
+      console.log( gradient );
+
+      return {
+          'background-image': gradient
+      };
+    };
+
+    $scope.doClick = function() {
 
       var responsePromise = $http.get("/info");
 
       responsePromise.success(function(data, status, headers, config) {
-        $scope.myData = data;
+        $scope.myData = data.data;
+        $scope.startTime = data.time;
+        $scope.average = data.average;
       });
       responsePromise.error(function(data, status, headers, config) {
         alert("AJAX failed!");
