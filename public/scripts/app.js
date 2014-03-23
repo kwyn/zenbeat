@@ -83,14 +83,15 @@ var zenbeat = angular.module('zenbeat', ['ngRoute','ngAnimate'])
 
       //return a thing that is an array
 
-      var gradient = 'linear-gradient(to bottom, ';
+      var gradient = 'linear-gradient(to bottom, red 0%,';
 
-      var hrv = $scope.average,
-        change = 0,
+      var change = 0,
         previous_change = 0,
-        hrv = 0,
+        hrv = $scope.average,
         previous_hrv = 0,
         current_change_total = 0;
+
+      var threshold = 40;
 
       for( var i = 0; i < $scope.myData.length; i++ ){
 
@@ -103,13 +104,19 @@ var zenbeat = angular.module('zenbeat', ['ngRoute','ngAnimate'])
         change = previous_hrv - hrv;
 
         current_change_total += change;
+
+        var percent = ( i / $scope.myData.length ) * 100;
+
+        if( current_change_total > threshold ){
+          //calculate the percentage
+          gradient = gradient + 'yellow '+percent+'%, '
+        }else{
+          gradient = gradient + 'red '+percent+'%, '
+
+        }
       }
 
-      gradient = gradient + 'red 0%, yellow 10%, red 20%, yellow 30%, red 40%, yellow 50%';
-
-      gradient = gradient + ')';
-
-      console.log( gradient );
+      gradient = gradient + 'red 100%)';
 
       return {
           'background-image': gradient

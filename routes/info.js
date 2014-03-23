@@ -23,7 +23,7 @@ exports.info = function(req, res){
     var return_data = [];
 
     for( var i = 0; i<data.length; i++ ){
-      avg += data[i][1];
+      avg += Number( data[i][1] );
       return_data.push( data[i][1] );
     }
 
