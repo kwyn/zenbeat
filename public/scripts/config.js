@@ -5,9 +5,9 @@ jsvis.config(function($routeProvider, $locationProvider) {
         templateUrl: '../views/mainindex.html',
         controller: 'MainController'
       })
-      .when('/about', {
-        templateUrl: '../views/mainindex.html',
-        controller: 'MainController'
+      .when('/login', {
+        templateUrl: '../views/login.html',
+        controller: 'LoginController'
       })
       .when('/contact', {
         templateUrl: '../views/mainindex.html',
