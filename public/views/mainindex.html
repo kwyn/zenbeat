@@ -1,1 +1,8 @@
-<div class="container index" ></div>
+<div class="container index" ng-controller='MainController'>
+  <div ng-style="calcGradients()">
+    <ul>
+      <li class="point" ng-repeat="point in myData">{{point[1]}}</li>
+    </ul>
+  </div>
+  <button ng-click="doClick()">Get Data</button>
+</div>
