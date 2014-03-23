@@ -1,4 +1,4 @@
-jsvis.config(function($routeProvider, $locationProvider) {
+zenbeat.config(function($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
     $routeProvider
       .when('/', {
@@ -6,12 +6,8 @@ jsvis.config(function($routeProvider, $locationProvider) {
         controller: 'MainController'
       })
       .when('/login', {
-        templateUrl: '../views/login.html',
+        templateUrl: '../views/login1.html',
         controller: 'LoginController'
-      })
-      .when('/contact', {
-        templateUrl: '../views/mainindex.html',
-        controller: 'MainController'
       })
       .otherwise({
         redirectTo: '/'

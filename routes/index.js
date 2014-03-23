@@ -4,5 +4,5 @@
  */
 
 exports.index = function(req, res){
-  res.render('index', { title: 'JS Visualizer' });
+  res.render('index', { title: 'Zen Beat' });
 };
